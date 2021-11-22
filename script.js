@@ -1,13 +1,10 @@
 function cleanUpIndex() {
-    // removes all DOM node that are unique to index page 
     let cleanUp = document.querySelectorAll('.contact');
     cleanUp.remove;
     for (let i = 0; i < cleanUp.length; i++) { cleanUp[i].remove(); }
 }
 
 function createSingleIndex(contact) {
-    // CREAT DOM node that represents a single index card for index page. 
-    // take in single object = object represents a single contact 
     let main = document.querySelectorAll('.main');
 
     let createAtag = document.createElement('a');
@@ -23,8 +20,6 @@ function createSingleIndex(contact) {
 }
 
 function renderIndex(contact) {
-    // creates all of DOM nodes that are unique
-    // take single parameter, array containing contacts, each represent single contact
     let main = document.querySelectorAll('.main');
 
     for (let c = 0; c < contact.length; c++) {
@@ -57,7 +52,6 @@ let contactList = [
 ]
 
 function cleanUpView() {
-    // removes all DOM node that are unique to index page 
     let cleanUp = document.querySelectorAll('.contactinfo');
     cleanUp.remove;
     for (let i = 0; i < cleanUp.length; i++) {cleanUp[i].remove();}
@@ -65,6 +59,7 @@ function cleanUpView() {
 
 function renderView(contact) {
     let main = document.querySelectorAll('.main');
+
     let infoDiv = document.createElement('div');
     infoDiv.className = 'contactinfo';
     main[0].appendChild(infoDiv);
@@ -121,17 +116,15 @@ function renderView(contact) {
     main[0].appendChild(infoDiv); 
 }
 
-
 function cleanUpCreate() {
-    // removes all DOM node that are unique to index page 
     let cleanUp = document.querySelectorAll('.contactedit');
     cleanUp.remove;
     for (let i = 0; i < cleanUp.length; i++) {cleanUp[i].remove();}
 }
 
-
 function renderCreate(contact) {
     let main = document.querySelectorAll('.main');
+
     let editContactDiv = document.createElement('div');
     editContactDiv.className = 'contactedit';
     main[0].appendChild(editContactDiv);
@@ -151,10 +144,8 @@ function renderCreate(contact) {
     let contactForm = document.createElement('form');
     formDiv.appendChild(contactForm);
 
-
     let contactNameDiv = document.createElement('div');
     contactNameDiv.className = 'inputcontainer';
-
 
     let inputContactName = document.createElement('input');
     inputContactName.type = 'text';
@@ -164,8 +155,6 @@ function renderCreate(contact) {
     contactNameDiv.appendChild(inputContactName);
 
     let namePlus = document.createTextNode('+');
-
-
     let nameButton = document.createElement('button');
     nameButton.className = 'extrafield';
     nameButton.id = 'extranamefield';
@@ -177,10 +166,8 @@ function renderCreate(contact) {
     formDiv.appendChild(contactForm);
     editContactDiv.appendChild(formDiv);
 
-
     let contactPhoneDiv = document.createElement('div');
     contactPhoneDiv.className = 'inputcontainer';
-
     let inputContactPhone = document.createElement('input');
     inputContactPhone.type = 'tel';
     inputContactPhone.id = 'contactphone';
@@ -189,7 +176,6 @@ function renderCreate(contact) {
     contactPhoneDiv.appendChild(inputContactPhone);
 
     let phonePlus = document.createTextNode('+');
-
     let phoneButton = document.createElement('button');
     phoneButton.className = 'extrafield';
     phoneButton.id = 'extraphonefield';
@@ -203,8 +189,6 @@ function renderCreate(contact) {
 
     let contactAddressDiv = document.createElement('div');
     contactAddressDiv.className = 'inputcontainer';
-
-    
     let inputContactAddress = document.createElement('input');
     inputContactAddress.type = 'text';
     inputContactAddress.id = 'contactaddress';
@@ -213,7 +197,6 @@ function renderCreate(contact) {
     contactAddressDiv.appendChild(inputContactAddress);
 
     let addressPlus = document.createTextNode('+');
-
     let addressButton = document.createElement('button');
     addressButton.className = 'extrafield';
     addressButton.id = 'extraaddressfield';
@@ -228,7 +211,6 @@ function renderCreate(contact) {
     let contactEmailDiv = document.createElement('div');
     contactEmailDiv.className = 'inputcontainer';
 
-    
     let inputContactEmail = document.createElement('input');
     inputContactEmail.type = 'email';
     inputContactEmail.id = 'contactemail';
@@ -237,8 +219,6 @@ function renderCreate(contact) {
     contactEmailDiv.appendChild(inputContactEmail);
 
     let emailPlus = document.createTextNode('+');
-
-
     let emailButton = document.createElement('button');
     emailButton.className = 'extrafield';
     emailButton.id = 'extraemailfield';
