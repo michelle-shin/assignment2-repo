@@ -10,24 +10,25 @@ function createSingleIndex(contact) {
     let createAtag = document.createElement('a');
     let createDiv = document.createElement('div');
     let createPtag = document.createElement('p');
+    let textName = document.createTextNode(contact.name);
 
     createDiv.className = 'contact';
     createDiv.appendChild(createPtag);
     createAtag.appendChild(createDiv);
     createAtag.href = 'page3.html';
-    createAtag.appendChild(createPtag);
+    createPtag.appendChild(textName);
     main[0].appendChild(createAtag);
 }
 
-function renderIndex(contact) {
+function renderIndex() {
     let main = document.querySelectorAll('.main');
 
-    for (let c = 0; c < contact.length; c++) {
+    for (let c = 0; c < contactList.length; c++) {
     let createAtag = document.createElement('a');
     let createDiv = document.createElement('div');
     let createPtag = document.createElement('p');
 
-    createPtag.append(contact[c].name);
+    createPtag.append(contactList[c].name);
     createDiv.className = 'contact';
     createDiv.appendChild(createPtag);
     createAtag.appendChild(createDiv);
@@ -35,21 +36,6 @@ function renderIndex(contact) {
     main[0].appendChild(createAtag);   
     };
 }
-
-let contactList = [
-    {
-    name: "Roberta Dobbs",
-    phone: "778-555-1234",
-    address: "101 Main St, Anytown, USA",
-    email: "subgenius@slack.example.com",
-    }, 
-    {
-    name: "Bugs Bunny",
-    phone: "123-867-5309",
-    address: "Warner Brothers Animation Lot",
-    email: "whatsup@doc.example.com",
-    },
-]
 
 function cleanUpView() {
     let cleanUp = document.querySelectorAll('.contactinfo');
@@ -113,7 +99,16 @@ function renderView(contact) {
     editButton.appendChild(editButtonText);
     closeButton.appendChild(closeButtonText);
 
-    main[0].appendChild(infoDiv); 
+    main[0].appendChild(infoDiv);  
+
+    document.querySelector('.close').addEventListener('click', () => {
+        cleanUpView();
+        cleanUpIndex();
+        renderIndex();
+    }) 
+    document.querySelector('.edit').addEventListener('click', () => {
+        console.log('Nothing');
+    })
 }
 
 function cleanUpCreate() {
@@ -256,4 +251,53 @@ function renderCreate(contact) {
     cancelButton.appendChild(cancelButtonText);
 
     main[0].appendChild(editContactDiv); 
+
+    let nameInput = document.getElementById('contactname')
+    let phoneInput = document.getElementById('contactphone')
+    let addressInput = document.getElementById('contactaddress')
+    let emailInput = document.getElementById('contactemail')
+
+    document.querySelector('form').addEventListener('submit', (event) => {
+        event.preventDefault();
+        console.log(nameInput.value, phoneInput.value, addressInput.value, emailInput.value)
+        cleanUpCreate();
+        renderCreate();
+    })
 }
+
+// TERM ASSIGNMENT #3
+
+let contactList = [
+    {
+    name: "Roberta Dobbs",
+    phone: "778-555-1234",
+    address: "101 Main St, Anytown, USA",
+    email: "subgenius@slack.example.com",
+    }, 
+    {
+    name: "Bugs Bunny",
+    phone: "123-867-5309",
+    address: "Warner Brothers Animation Lot",
+    email: "whatsup@doc.example.com",
+    },
+]
+
+function ContactNav(contact) {
+    document.getElementById('contactshome').removeAttribute('href')
+  }
+document.querySelector('h1').addEventListener('click',  () => {
+    cleanUpIndex();
+    cleanUpCreate();
+    renderIndex();
+    ContactNav();
+})
+
+function CreateContactNav(contact) {
+    document.getElementById('newcontact').removeAttribute('href')
+  }
+document.querySelector('h2').addEventListener('click', () => {
+    cleanUpIndex();
+    cleanUpCreate();
+    renderCreate();
+    CreateContactNav();
+})
