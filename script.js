@@ -1,21 +1,24 @@
-function cleanUpIndex() {
-    let cleanUp = document.querySelectorAll('.contact');
+function cleanUpMain() {
+    let cleanUp = document.querySelectorAll('.main > *');
     cleanUp.remove;
     for (let i = 0; i < cleanUp.length; i++) { cleanUp[i].remove(); }
 }
 
-function createSingleIndex(contact) {
+function createSingleIndex(contactList) {
     let main = document.querySelectorAll('.main');
-
+    
     let createAtag = document.createElement('a');
-    let createDiv = document.createElement('div');
-    let createPtag = document.createElement('p');
-    let textName = document.createTextNode(contact.name);
+    createAtag.href = 'page3.html';
 
+    let createDiv = document.createElement('div');
     createDiv.className = 'contact';
+
+    let createPtag = document.createElement('p');
+    let textName = document.createTextNode(contactList.name);
+
     createDiv.appendChild(createPtag);
     createAtag.appendChild(createDiv);
-    createAtag.href = 'page3.html';
+    
     createPtag.appendChild(textName);
     main[0].appendChild(createAtag);
 }
@@ -34,16 +37,16 @@ function renderIndex() {
     createAtag.appendChild(createDiv);
     createAtag.href = 'page3.html';
     main[0].appendChild(createAtag);   
-    };
-}
 
-function cleanUpView() {
-    let cleanUp = document.querySelectorAll('.contactinfo');
-    cleanUp.remove;
-    for (let i = 0; i < cleanUp.length; i++) {cleanUp[i].remove();}
-}
+    //(4)
+     createAtag.addEventListener('click', (e) => {
+        e.preventDefault();
+        cleanUpMain();
+        renderView(contactList[c]);
+    }); 
+}}
 
-function renderView(contact) {
+function renderView(contactList) {
     let main = document.querySelectorAll('.main');
 
     let infoDiv = document.createElement('div');
@@ -52,7 +55,7 @@ function renderView(contact) {
 
     let nameDiv = document.createElement('div');
     nameDiv.className = 'contactname';
-    let nameText = document.createTextNode(contact.name);
+    let nameText = document.createTextNode(contactList.name);
     nameDiv.appendChild(nameText);
     infoDiv.appendChild(nameDiv);
 
@@ -64,19 +67,19 @@ function renderView(contact) {
 
     let emailDiv = document.createElement('div');
     emailDiv.className = 'contactemail';
-    let emailNode = document.createTextNode('email:' + contact.email);
+    let emailNode = document.createTextNode('email:' + contactList.email);
     emailDiv.appendChild(emailNode);
     infoDiv.appendChild(emailDiv);
 
     let phoneDiv = document.createElement('div');
     phoneDiv.className = 'contactphone';
-    let phoneNode = document.createTextNode('cell: +1' + contact.phone);
+    let phoneNode = document.createTextNode('cell: +1' + contactList.phone);
     phoneDiv.appendChild(phoneNode);
     infoDiv.appendChild(phoneDiv);
 
     let addressDiv = document.createElement('div');
     addressDiv.className = 'contactaddress';
-    let addressNode = document.createTextNode('address:' + contact.address);
+    let addressNode = document.createTextNode('address:' + contactList.address);
     addressDiv.appendChild(addressNode);
     infoDiv.appendChild(addressDiv);
 
@@ -101,23 +104,19 @@ function renderView(contact) {
 
     main[0].appendChild(infoDiv);  
 
-    document.querySelector('.close').addEventListener('click', () => {
-        cleanUpView();
-        cleanUpIndex();
-        renderIndex();
+    //(5) 
+    document.querySelector('.close').addEventListener('click', (e) => {
+        e.preventDefault();
+        cleanUpMain();
+        renderIndex(contactList);
     }) 
-    document.querySelector('.edit').addEventListener('click', () => {
-        console.log('Nothing');
+    //(6)
+    document.querySelector('.edit').addEventListener('click', (e) => {
+        e.preventDefault();
     })
 }
 
-function cleanUpCreate() {
-    let cleanUp = document.querySelectorAll('.contactedit');
-    cleanUp.remove;
-    for (let i = 0; i < cleanUp.length; i++) {cleanUp[i].remove();}
-}
-
-function renderCreate(contact) {
+function renderCreate() {
     let main = document.querySelectorAll('.main');
 
     let editContactDiv = document.createElement('div');
@@ -250,23 +249,35 @@ function renderCreate(contact) {
     saveButton.appendChild(saveButtonText);
     cancelButton.appendChild(cancelButtonText);
 
-    main[0].appendChild(editContactDiv); 
+    //(7)
+    document.querySelector('.cancel').addEventListener('click', (e) => {
+        e.preventDefault();
+        cleanUpMain();
+        renderIndex(contactList);
+    }) 
 
-    let nameInput = document.getElementById('contactname')
-    let phoneInput = document.getElementById('contactphone')
-    let addressInput = document.getElementById('contactaddress')
-    let emailInput = document.getElementById('contactemail')
-
-    document.querySelector('form').addEventListener('submit', (event) => {
-        event.preventDefault();
-        console.log(nameInput.value, phoneInput.value, addressInput.value, emailInput.value)
-        cleanUpCreate();
-        renderCreate();
+    //(8,9)
+    saveButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        newContactList = {
+            name: '',
+            phone: '',
+            address: '',
+            email: '',
+        }
+        newContactList.name = inputContactName.value
+        newContactList.phone = inputContactPhone.value
+        newContactList.address = inputContactAddress.value
+        newContactList.email = inputContactEmail.value
+        contactList.push(newContactList)
+        console.log(contactList)
     })
 }
 
+
 // TERM ASSIGNMENT #3
 
+//(1)
 let contactList = [
     {
     name: "Roberta Dobbs",
@@ -280,24 +291,31 @@ let contactList = [
     address: "Warner Brothers Animation Lot",
     email: "whatsup@doc.example.com",
     },
+    {
+    name: "Daniel Lee",
+    phone: "604-795-1122",
+    address: "23 Victoria Ave, Vancouver, BC",
+    email: "dlee@gmail.com"
+    }
 ]
 
-function ContactNav(contact) {
-    document.getElementById('contactshome').removeAttribute('href')
-  }
-document.querySelector('h1').addEventListener('click',  () => {
-    cleanUpIndex();
-    cleanUpCreate();
-    renderIndex();
-    ContactNav();
+//(2)
+document.querySelector('h1').addEventListener('click',  (e) => {
+    e.preventDefault();
+    cleanUpMain();
+    renderIndex(contactList);
 })
 
-function CreateContactNav(contact) {
-    document.getElementById('newcontact').removeAttribute('href')
-  }
-document.querySelector('h2').addEventListener('click', () => {
-    cleanUpIndex();
-    cleanUpCreate();
-    renderCreate();
-    CreateContactNav();
+//(3)
+document.querySelector('h2').addEventListener('click', (e) => {
+    e.preventDefault();
+    cleanUpMain();
+    renderCreate(contactList);
 })
+
+//(10)
+window.onload = function (e) {
+    e.preventDefault();
+    cleanUpMain();
+    renderIndex(contactList);
+}
